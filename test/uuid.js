@@ -329,6 +329,25 @@ exports['newTS() alias for create(1)'] = function() {
   spy.restore();
 };
 
+exports['correct random max values'] = function() {
+
+  var stub = sinon.stub(Math, 'random').returns(0.9999999999);
+
+  assert.equal(UUID.randomUI04(), 0x0000000F);
+  assert.equal(UUID.randomUI06(), 0x0000003F);
+  assert.equal(UUID.randomUI08(), 0x000000FF);
+  assert.equal(UUID.randomUI12(), 0x00000FFF);
+  assert.equal(UUID.randomUI14(), 0x00003FFF);
+  assert.equal(UUID.randomUI16(), 0x0000FFFF);
+  assert.equal(UUID.randomUI32(), 0xFFFFFFFF);
+
+  // not really sure about these....
+  assert.equal(UUID.randomUI40(), 0xFFFFFFFFFF);
+  assert.equal(UUID.randomUI48(), 0xFFFFFFFFFFFF);
+
+  stub.restore();
+
+};
 
 for (var key in exports) {
   exports[key]();
